@@ -48,4 +48,12 @@ onMounted(async () => {
     },
   })
 })
+
+onMounted(() => {
+  window.Echo.channel('builds')
+    .listen('BuildCreated', (e) => {
+      builds.value.unshift(e.build);
+      updateChart(); // optionally rerender chart
+    });
+});
 </script>

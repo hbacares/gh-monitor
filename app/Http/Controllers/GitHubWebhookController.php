@@ -51,6 +51,7 @@ class GitHubWebhookController extends Controller
                         'completed_at' => $workflow['updated_at'],
                     ]
                 );
+                event(new BuildCreated($build));
             }
         }
 
