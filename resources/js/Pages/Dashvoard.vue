@@ -18,6 +18,19 @@
         <h2 class="text-lg font-semibold">Build Duration</h2>
         <canvas ref="chart"></canvas>
       </div>
+
+      <div class="flex justify-between items-center mb-4">
+        <h1 class="text-3xl font-bold">CI/CD Dashboard</h1>
+
+        <select v-model="selectedStatus" @change="fetchBuilds"
+          class="border-gray-300 rounded-lg text-sm p-2">
+          <option value="">All Statuses</option>
+          <option value="completed">Completed</option>
+          <option value="in_progress">In Progress</option>
+          <option value="queued">Queued</option>
+        </select>
+      </div>
+
     </div>
   </div>
 </template>
@@ -29,6 +42,19 @@ import axios from 'axios'
 
 const builds = ref([])
 const chart = ref(null)
+const selectedStatus = ref('');
+
+async function fetchBuilds() {
+  let url = '/api/builds';
+  if (selectedStatus.value) {
+    url += `?status=${selectedStatus.value}`;
+  }
+
+  const res = await axios.get(url);
+  builds.value = res.data;
+}
+
+
 
 onMounted(async () => {
   const res = await axios.get('/api/builds')
