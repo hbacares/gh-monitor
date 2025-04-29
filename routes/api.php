@@ -4,8 +4,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GitHubWebhookController;
 use App\Models\Build;
-use Illuminate\Http\Request;
-use App\Models\Build;
 
 Route::middleware('auth:sanctum')->get('/builds', function (Request $request) {
     $query = Build::query();
